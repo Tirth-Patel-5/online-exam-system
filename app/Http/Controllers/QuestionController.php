@@ -9,9 +9,14 @@ use Illuminate\Http\Request;
 class QuestionController extends Controller
 {
     // Show form to add questions to an exam
-    public function addQuestionForm(Exam $exam) {
-        return view('teacher.add_question', compact('exam'));
+    public function addQuestionForm(Exam $exam)
+{
+    if (!auth()->user()->can('add-questions')) {
+        abort(403, 'Unauthorized action.');
     }
+    return view('teacher.add_question', compact('exam'));
+}
+
 
     // Store questions for an exam
     public function storeQuestion(Request $request, Exam $exam) {
