@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Exam;
+use App\Models\Role;
+use App\Models\Question;
+use App\Models\StudentAnswer;
+use App\Models\Result;
 
 class AdminController extends Controller
 {
@@ -13,10 +17,13 @@ class AdminController extends Controller
         return view('admin.dashboard');
     }
 
-    public function manageUsers() {
+    public function manageUsers()
+    {
+        $this->authorize('manage-users'); // Ensure permission is defined
         $users = User::all();
         return view('admin.users', compact('users'));
     }
+    
 
     public function manageExams() {
         $exams = Exam::all();

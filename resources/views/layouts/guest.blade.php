@@ -13,18 +13,28 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        <!-- Favicon -->
+        <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-            <div>
+    <body class="font-sans text-gray-900 antialiased bg-gray-50">
+        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
+            <!-- Application Logo -->
+            <div class="mb-6">
                 <a href="/">
                     <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
                 </a>
             </div>
 
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+            <!-- Content Section -->
+            <div class="w-full sm:max-w-md px-6 py-4 bg-white shadow-lg rounded-lg">
                 {{ $slot }}
             </div>
+
+            <!-- Footer -->
+            <footer class="mt-8 text-center text-gray-500 text-sm">
+                © {{ date('Y') }} {{ config('app.name', 'Laravel') }}. All rights reserved.
+            </footer>
         </div>
     </body>
 </html>
