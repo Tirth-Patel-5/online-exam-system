@@ -1,27 +1,22 @@
 <?php
+
 namespace App\Http\Middleware;
-use Illuminate\Http\Request;
+
 use Closure;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CheckRole
 {
-    public function handle(Request $request, Closure $next, $role, $permission = null)
+    public function handle(Request $request, Closure $next, $role)
     {
-        $user = Auth::user();
 
-        if (!$user) {
-            return redirect()->route('login'); // Redirect if not authenticated
+        $roles = ['admin', 'teacher', 'student'];
+
+        if (!Auth::user() || !Auth::user()->hasRole($role)) {
+            // Redirect or return error
+            return redirect('/'); // Or another response
         }
-
-        if (!$user->hasRole($role)) {
-            abort(403, 'Unauthorized access. No valid role assigned.');
-        }
-
-        if ($permission && !$user->can($permission)) {
-            abort(403, 'Unauthorized action.');
-        }
-
         return $next($request);
     }
 }

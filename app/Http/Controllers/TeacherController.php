@@ -11,14 +11,9 @@ class TeacherController extends Controller
         return view('teacher.dashboard');
     }
 
-    public function createExam()
-{
-    if (!auth()->user()->hasRole('teacher')) {
-        abort(403, 'Unauthorized action.');
+    public function createExam() {
+        return view('teacher.create-exam');
     }
-    return view('teacher.create_exam');
-}
-
 
     public function storeExam(Request $request) {
         $exam = new Exam();

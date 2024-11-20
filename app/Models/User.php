@@ -8,41 +8,16 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use App\Http\Middleware\CheckRole;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Laravel\Sanctum\HasApiTokens;
-use App\Traits\HasPermissionsTrait;
 
-class User extends Authenticatable
-{
-    use  HasFactory, Notifiable, HasRoles;
+class User extends Authenticatable {
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var string[]
-     */
+    use HasFactory, Notifiable, HasRoles;
+
     protected $fillable = [
-        'name',
+        'name',  // Add 'name' here
         'email',
         'password',
+        // other fields as necessary
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
 }
