@@ -13,6 +13,11 @@ class User extends Authenticatable {
 
     use HasFactory, Notifiable, HasRoles;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
+     */
     protected $fillable = [
         'name',  // Add 'name' here
         'email',

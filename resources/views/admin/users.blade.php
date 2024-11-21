@@ -3,10 +3,14 @@
 @section('content')
     <div class="container">
         <h1>Manage Users</h1>
-        <!-- Add a form or table to manage users -->
-        <a href="{{ url('admin.createUser') }}" class="btn btn-primary">Create User</a>
-        <table class="table">
-            <thead>
+        <a href="{{ url('admin.createUser') }}" class="btn btn-primary">
+            <i class="fas fa-user-plus"></i> Create User
+        </a>
+    </div>
+    
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
                 <tr>
                     <th>Name</th>
                     <th>Email</th>
@@ -34,4 +38,5 @@
             </tbody>
         </table>
     </div>
+</div>
 @endsection
