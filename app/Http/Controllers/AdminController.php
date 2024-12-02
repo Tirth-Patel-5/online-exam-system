@@ -20,11 +20,10 @@ class AdminController extends Controller
 
     public function manageUsers()
     {
-        $this->authorize('manage-users'); // Ensure permission is defined
-        $users = User::all();
+        $users = User::paginate(10); // Fetch users with pagination
         return view('admin.users', compact('users'));
     }
-    
+
 
     
 

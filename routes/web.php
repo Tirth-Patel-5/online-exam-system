@@ -42,6 +42,11 @@ Route::view('/', 'dashboard');
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/users', [AdminController::class, 'manageUsers'])->name('admin.users');
+    Route::get('/create-user', [AdminController::class, 'createUser'])->name('admin.createUser');  // Create new user
+    Route::get('/edit-user/{id}', [AdminController::class, 'editUser'])->name('admin.editUser');  // Edit user
+    Route::put('/update-user/{id}', [AdminController::class, 'updateUser'])->name('admin.updateUser');
+    Route::post('/admin/users', [AdminController::class, 'storeUser'])->name('admin.storeUser');
+    Route::delete('/delete-user/{id}', [AdminController::class, 'deleteUser'])->name('admin.deleteUser');  // Delete user
     Route::get('/exams', [AdminController::class, 'manageExams'])->name('admin.exams');
     Route::get('/settings', [AdminController::class, 'settings'])->name('admin.settings');
 });

@@ -1,64 +1,65 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-2xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-        <form method="POST" action="{{ route('register') }}">
-    @csrf
-    <!-- Form fields for name, email, password, etc. -->
-    <button type="submit">Register</button>
-</form>
-
-    </x-slot>
-
-    <div class="py-12 bg-gray-100 min-h-screen">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <!-- Welcome Card -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
-                <div class="p-6 text-gray-900">
-                    <h3 class="text-xl font-semibold">Welcome!</h3>
-                    <p class="text-gray-700 mt-2">{{ __("You're logged in! Explore your dashboard to manage your tasks and view your progress.") }}</p>
-                </div>
-            </div>
-
-            <!-- Action Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Profile Management -->
-                <div class="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition-shadow">
-                    <h4 class="text-lg font-semibold text-gray-800">Profile</h4>
-                    <p class="text-gray-600 mt-2">Manage your personal information and account settings.</p>
-                    <a href="#" class="mt-4 inline-block px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
-                        Manage Profile
-                    </a>
-                </div>
-
-                <!-- Notifications -->
-                <div class="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition-shadow">
-                    <h4 class="text-lg font-semibold text-gray-800">Notifications</h4>
-                    <p class="text-gray-600 mt-2">Stay updated with the latest notifications and alerts.</p>
-                    <a href="#" class="mt-4 inline-block px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors">
-                        View Notifications
-                    </a>
-
-
-                                            <nav>
-                            @auth
-                                @if(auth()->user()->hasRole('Admin'))
-                                    <a href="{{ route('admin.dashboard') }}">Admin Dashboard</a>
-                                @elseif(auth()->user()->hasRole('Teacher'))
-                                    <a href="{{ route('teacher.dashboard') }}">Teacher Dashboard</a>
-                                @elseif(auth()->user()->hasRole('Student'))
-                                    <a href="{{ route('student.dashboard') }}">Student Dashboard</a>
-                                @endif
-                            @else
-                                <a href="{{ route('login') }}">Login</a>
-                                <a href="{{ route('register') }}">Register</a>
-                            @endauth
-                        </nav>
-
-
-                </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Online Examination System</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+        <div class="container">
+            <a class="navbar-brand font-weight-bold" href="{{ url('/') }}">
+                <i class="fas fa-book-open"></i> Online Exam
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    @guest
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('register') }}"><i class="fas fa-user-plus"></i> Register</a>
+                        </li>
+                    @else
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('logout') }}" 
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </li>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    @endguest
+                </ul>
             </div>
         </div>
+    </nav>
+
+    <!-- Content Section -->
+    <div class="container mt-5">
+        @yield('content')
     </div>
-</x-app-layout>
+
+    <!-- Footer -->
+    <footer class="bg-light py-3 mt-5 shadow-sm">
+        <div class="container text-center">
+            <p class="mb-0 text-muted">© {{ date('Y') }} Online Examination System. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap and jQuery JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
